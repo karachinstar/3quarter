@@ -231,22 +231,6 @@ public class Xand0 {
             temp = 0;
         }
 
-//         Проверка по центральным диагоналям
-//        if (fieldSizeX == fieldSizeY) {
-//            for (int x = 0; x < fieldSizeX; x++) {
-//                if (field[x][x] == dot) temp += 1;
-//                else temp = 0;
-//                if (field[0 + x][fieldSizeX - 1 - x] == dot) temp2 += 1;
-//                else {
-//                    temp2 = 0;
-//                }
-//                if (temp == winCombination || temp2 == winCombination) return true;
-//            }
-//
-//            //
-//        }
-
-
         // Проверка по дополнительным диагоналям
 
         while (temp3 <= fieldSizeX) {
@@ -272,13 +256,14 @@ public class Xand0 {
                 }
                 if (temp4 == winCombination) return true;
 
-                if (field[fieldSizeX - x][fieldSizeX - x - temp6]  == dot) {
+                if (field[fieldSizeX - 1  - temp6 + x][fieldSizeX  - 1 - x]  == dot) {
                     temp5 += 1;
                     System.out.println("Temp5="+temp5);
                 } else {
                     temp5 = 0;
                 }
                 if (temp5 == winCombination) return true;
+
 
 
             }
@@ -289,6 +274,8 @@ public class Xand0 {
             temp4 =0;
             temp5 = 0;
             temp6 += 1;
+
+
         }
         return false;
     }
