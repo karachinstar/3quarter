@@ -175,30 +175,31 @@ public class Xand0 {
     }
 
     /**
-     * Проверка победы игрока
+     * Попытка сделать умного бота
      *
      * @param dot фишка игрока
      * @return
      */
-    static boolean checkWin(char dot) {
-        // Проверка по трем горизонталям
-        if (field[0][0] == dot && field[0][1] == dot && field[0][2] == dot) return true;
-        if (field[1][0] == dot && field[1][1] == dot && field[1][2] == dot) return true;
-        if (field[2][0] == dot && field[2][1] == dot && field[2][2] == dot) return true;
-
-        // Проверка по трем вертикалям
-        if (field[0][0] == dot && field[1][0] == dot && field[2][0] == dot) return true;
-        if (field[0][1] == dot && field[1][1] == dot && field[2][1] == dot) return true;
-        if (field[0][2] == dot && field[1][2] == dot && field[2][2] == dot) return true;
-
-        // Проверка по диагонали
-        if (field[0][0] == dot && field[1][1] == dot && field[2][2] == dot) return true;
-        if (field[0][2] == dot && field[1][1] == dot && field[2][0] == dot) return true;
-        return false;
-    }
+//    static char checkWin(char dot, char fieldWin[][]) {
+//        int temp = 0;
+//        int temp2 = 0;
+//        int temp3 = 1;
+//        int temp4 = 0;
+//        int temp5 = 0;
+//        int temp6 = 0;
+//        // Проверка по горизонталям
+//        for (int y = 0; y < fieldSizeY; y++) {
+//            for (int x = 0; x < fieldSizeX; x++) {
+//                if (field[y][x] == dot) temp += 1;
+//                else temp = 0;
+//                if (temp == winCombination - 1) return true;
+//            }
+//            temp = 0;
+//        }
+//    }
 
     /**
-     *
+     * Проверка победы игрока
      * @param dot
      * @return
      */
