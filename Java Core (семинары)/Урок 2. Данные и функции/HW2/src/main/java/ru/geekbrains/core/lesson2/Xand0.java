@@ -198,7 +198,6 @@ public class Xand0 {
     }
 
     /**
-     * Проверка победы игрока для любого размера поля
      *
      * @param dot
      * @return
@@ -250,7 +249,6 @@ public class Xand0 {
                 if (temp2 == winCombination) return true;
                 if (field[temp6 - x][x] == dot) {
                     temp4 += 1;
-                    System.out.println("Temp4="+temp4);
                 } else {
                     temp4 = 0;
                 }
@@ -258,7 +256,6 @@ public class Xand0 {
 
                 if (field[fieldSizeX - 1  - temp6 + x][fieldSizeX  - 1 - x]  == dot) {
                     temp5 += 1;
-                    System.out.println("Temp5="+temp5);
                 } else {
                     temp5 = 0;
                 }
