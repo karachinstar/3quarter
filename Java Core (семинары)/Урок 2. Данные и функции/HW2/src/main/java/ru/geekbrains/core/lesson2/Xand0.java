@@ -45,7 +45,7 @@ public class Xand0 {
     static void initialize() {
         fieldSizeY = 5;
         fieldSizeX = 5;
-        winCombination = 3;
+        winCombination = 4;
 
         field = new char[fieldSizeY][fieldSizeX];
         for (int y = 0; y < fieldSizeY; y++) {
@@ -102,16 +102,17 @@ public class Xand0 {
      * Ход игрока (компьютера)
      */
     static void aiTurn() {
-        int x;
-        int y;
-
-        do {
-            x = random.nextInt(fieldSizeX);
-            y = random.nextInt(fieldSizeY);
-        }
-        while (!isCellEmpty(x, y));
-
-        field[y][x] = DOT_AI;
+        checkWin(DOT_HUMAN);
+//        int x;
+//        int y;
+//
+//        do {
+//            x = random.nextInt(fieldSizeX);
+//            y = random.nextInt(fieldSizeY);
+//        }
+//        while (!isCellEmpty(x, y));
+//
+//        field[y][x] = DOT_AI;
     }
 
 
@@ -180,23 +181,43 @@ public class Xand0 {
      * @param dot фишка игрока
      * @return
      */
-//    static char checkWin(char dot, char fieldWin[][]) {
-//        int temp = 0;
-//        int temp2 = 0;
-//        int temp3 = 1;
-//        int temp4 = 0;
-//        int temp5 = 0;
-//        int temp6 = 0;
-//        // Проверка по горизонталям
-//        for (int y = 0; y < fieldSizeY; y++) {
-//            for (int x = 0; x < fieldSizeX; x++) {
-//                if (field[y][x] == dot) temp += 1;
-//                else temp = 0;
-//                if (temp == winCombination - 1) return true;
-//            }
-//            temp = 0;
-//        }
-//    }
+    static char checkWin(char dot) {
+        int temp = 0;
+        int temp2 = 0;
+        int temp3 = 1;
+        int temp4 = 0;
+        int temp5 = 0;
+        int temp6 = 0;
+        // Проверка по горизонталям
+        for (int y = 0; y < fieldSizeY; y++) {
+            for (int x = 0; x < fieldSizeX; x++) {
+                if (field[y][x] == dot) temp += 1;
+                else temp = 0;
+                if (temp == winCombination - 1 && field[y][x + 1] != DOT_AI || temp == winCombination - 2 && field[y][x + 1] != DOT_AI)
+                    if (x >= fieldSizeX - 1) {
+                        if (isCellEmpty(y, winCombination - 1)) {
+                            return field[y][x - winCombination - 1] = DOT_AI;
+                        } else if (isCellEmpty(y, winCombination - 2)) {
+                            return field[y][x - winCombination - 2] = DOT_AI;
+                        }
+                    } else {
+                        if (isCellEmpty(y, x + 1)) {
+                            return field[y][x + 1] = DOT_AI;
+                        }
+                    }
+            }
+            temp = 0;
+        }
+        int x;
+        int y;
+        do {
+            x = random.nextInt(fieldSizeX);
+            y = random.nextInt(fieldSizeY);
+        }
+        while (!isCellEmpty(x, y));
+
+        return field[y][x] = DOT_AI;
+    }
 
     /**
      * Проверка победы игрока
