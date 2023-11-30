@@ -18,8 +18,23 @@ public class Program1 {
 
 
     public static void main(String[] args) {
-        initialize();
-        printField();
+        while (true){
+            initialize();
+            printField();
+            while (true) {
+                humanTurn();
+                printField();
+                if (checkGameState(DOT_HUMAN, "Вы победили!"))
+                    break;
+                aiTurn();
+                printField();
+                if (checkGameState(DOT_AI, "Победил компьютер!"))
+                    break;
+            }
+            System.out.print("Желаете сыграть еще раз? (Y - да): ");
+            if (!scanner.next().equalsIgnoreCase("Y"))
+                break;
+        }
     }
 
     /**
@@ -30,9 +45,9 @@ public class Program1 {
         fieldSizeX = 3;
 
         field = new char[fieldSizeY][fieldSizeX];
-        for (int x = 0; x < fieldSizeY; x++){
-            for (int y = 0; y < fieldSizeX; y++){
-                field[x][y] = DOT_EMPTY;
+        for (int y = 0; y < fieldSizeY; y++){
+            for (int x = 0; x < fieldSizeX; x++){
+                field[y][x] = DOT_EMPTY;
             }
         }
     }
@@ -60,6 +75,7 @@ public class Program1 {
         for (int i = 0; i < fieldSizeX * 2 + 2; i++) {
             System.out.print("-");
         }
+        System.out.println();
     }
 
     /**
@@ -68,7 +84,110 @@ public class Program1 {
     static void humanTurn(){
         int x;
         int y;
-        System.out.print("Введите координаты хода X и Y (");
+
+        do {
+            System.out.print("Введите координаты хода X и Y (от 1 до 3)\nчерез пробел: ");
+            x = scanner.nextInt() - 1;
+            y = scanner.nextInt() - 1;
+        }
+        while(!isCellValid(x, y) ||!isCellEmpty(x, y));
+
+        field[y][x] = DOT_HUMAN;
     }
+
+    /**
+     * Ход игрока (компьютера)
+     */
+    static void aiTurn(){
+        int x;
+        int y;
+
+        do {
+            x = random.nextInt(fieldSizeX);
+            y = random.nextInt(fieldSizeY);
+        }
+        while(!isCellEmpty(x, y));
+
+        field[y][x] = DOT_AI;
+    }
+
+
+    /**
+     * Проверка, является ли ячейка игрового поля пустой
+     * @param x
+     * @param y
+     * @return
+     */
+    static boolean isCellEmpty(int x, int y){
+        return field[y][x] == DOT_EMPTY;
+    }
+
+    /**
+     * Проверка доступности ячейки игровоого поля
+     * @param x
+     * @param y
+     * @return
+     */
+    static boolean isCellValid(int x, int y){
+        return x >= 0 && x < fieldSizeX && y>= 0 && y <fieldSizeY;
+    }
+
+
+    /**
+     * Метод проверки состояния игры
+     * @param dot фишка игрока
+     * @param s победный слога
+     * @return результат проверки состояния игры
+     */
+    static boolean checkGameState(char dot, String s){
+        if(checkWin(dot)){
+            System.out.println(s);
+            return true;
+        }
+        if (checkDraw()){
+            System.out.println("Ничья!");
+            return true;
+        }
+        return false; //игра продолжается
+    }
+
+
+    /**
+     * Проверка на ничью
+     * @return
+     */
+    static boolean checkDraw(){
+        for (int y = 0; y < fieldSizeY; y++) {
+            for (int x = 0; x < fieldSizeX; x++) {
+                if (isCellValid(x, y)){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Проверка победы игрока
+     * @param dot фишка игрока
+     * @return
+     */
+    static boolean checkWin(char dot){
+        // Проверка по трем горизонталям
+        if(field[0][0] == dot && field[0][1] == dot && field[0][2] == dot) return true;
+        if(field[1][0] == dot && field[1][1] == dot && field[1][2] == dot) return true;
+        if(field[2][0] == dot && field[2][1] == dot && field[2][2] == dot) return true;
+
+        // Проверка по трем вертикалям
+        if(field[0][0] == dot && field[1][0] == dot && field[2][0] == dot) return true;
+        if(field[0][1] == dot && field[1][1] == dot && field[2][1] == dot) return true;
+        if(field[0][2] == dot && field[1][2] == dot && field[2][2] == dot) return true;
+
+        // Проверка по диагонали
+        if(field[0][0] == dot && field[1][1] == dot && field[2][2] == dot) return true;
+        if(field[0][2] == dot && field[1][1] == dot && field[2][0] == dot) return true;
+        return false;
+    }
+
 
 }
