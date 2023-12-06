@@ -25,12 +25,13 @@ public class TreeHW5 {
             return;
         int subDirTotal = 0;
         int subFileTotal = 0;
-        for (int i = 0; i< files.length; i++){
-            if(files[i].isDirectory())
+        for (int i = 0; i< files.length; i++) {
+            if (files[i].isDirectory())
                 subDirTotal++;
-            if(files[i].isFile());
+            if (files[i].isFile()) {
                 subDirTotal++;
                 subFileTotal++;
+            }
         }
 
         int subDirCounter = 0;
