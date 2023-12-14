@@ -14,6 +14,7 @@ public class ServerWindow extends JFrame {
 
     private final JButton btnStart = new JButton("Start");
     private final JButton btnStop = new JButton("Stop");
+    private final JButton openUserChat = new JButton("Open chat");
     public static final JTextArea logServer = new JTextArea();
     public static boolean isServerWorking;
 
@@ -43,24 +44,9 @@ public class ServerWindow extends JFrame {
             }
         });
 
-        ClientWindow.getBtnSend().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (ClientWindow.isClientLogin) {
-                    logServer.append(ClientWindow.tfLogin.getText() + ": " + ClientWindow.tfMassage.getText() + "\n");
-                    ClientWindow.text = ServerWindow.logServer.getText();
-                    String[] lines = ClientWindow.text.split("\n");
-                    ClientWindow.text = lines[lines.length - 1];
-                    ClientWindow.setLogClient(ClientWindow.text + "\n");
-                    //ClientWindow.logClient.append(ClientWindow.text + "\n");
-                    // logClient.append(tfLogin.getText() + ": " + tfMassage.getText() + "\n");
-                }else{
-                    ClientWindow.setLogClient("Вы не подключены к серверу\n");
-                }
-                //logClient.setText("");
-                ClientWindow.tfMassage.setText("");
-            }
-        });
+//        openUserChat.addActionListener(e -> {
+//            new ClientWindow();
+//        });
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setBounds(POS_X, POS_Y, WIDTH, HEIGHT);
@@ -71,6 +57,7 @@ public class ServerWindow extends JFrame {
         //setLayout(new GridLayout(1, 2));
         panButton.add(btnStart);
         panButton.add(btnStop);
+        //panButton.add(openUserChat);
         add(panButton, BorderLayout.SOUTH);
         add(logServer);
 
