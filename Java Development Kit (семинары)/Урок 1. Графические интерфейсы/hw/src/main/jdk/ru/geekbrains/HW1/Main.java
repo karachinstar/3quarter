@@ -1,6 +1,6 @@
 package ru.geekbrains.HW1;
 
-import ru.geekbrains.HW1.client.ClientWindow;
+import ru.geekbrains.HW1.client.ClientWindowChat;
 import ru.geekbrains.HW1.server.ServerWindow;
 
 public class Main {

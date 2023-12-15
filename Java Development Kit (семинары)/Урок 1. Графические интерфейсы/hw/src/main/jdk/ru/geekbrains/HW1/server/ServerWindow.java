@@ -1,5 +1,5 @@
 package ru.geekbrains.HW1.server;
-import ru.geekbrains.HW1.client.ClientWindow;
+import ru.geekbrains.HW1.client.ClientWindowChat;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,7 +45,9 @@ public class ServerWindow extends JFrame {
         });
 
         openUserChat.addActionListener(e -> {
-            new ClientWindow();
+            if(isServerWorking)
+            new ClientWindowChat();
+            else logServer.append("Сервер неактивен\n");
         });
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -65,4 +67,3 @@ public class ServerWindow extends JFrame {
         setVisible(true);
     }
 }
-

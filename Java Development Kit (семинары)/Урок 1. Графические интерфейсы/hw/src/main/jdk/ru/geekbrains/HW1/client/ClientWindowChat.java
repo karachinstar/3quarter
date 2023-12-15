@@ -3,15 +3,15 @@ package ru.geekbrains.HW1.client;
 import ru.geekbrains.HW1.server.ServerWindow;
 
 import javax.swing.*;
-import javax.swing.text.BadLocationException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.TimerTask;
+import java.io.*;
 
+import static ru.geekbrains.HW1.server.ServerWindow.isServerWorking;
 import static ru.geekbrains.HW1.server.ServerWindow.logServer;
 
-public class ClientWindow extends JFrame {
+public class ClientWindowChat extends JFrame {
     private static final int WIDTH = 400;
     private static final int HEIGHT = 300;
     public static boolean isClientLogin;
@@ -31,9 +31,10 @@ public class ClientWindow extends JFrame {
 
     public static String text;
     public static String text2;
+    private static final String LOG_FILE = "/3quarter/Java Development Kit (семинары)/Урок 1. Графические интерфейсы/hw/src/main/jdk/ru/geekbrains/HW1/chat_log.txt";
 
 
-    public ClientWindow() {
+    public ClientWindowChat() {
         Timer timer = new Timer(100, new ActionListener() { //creating timer with delay of 1 second
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -41,14 +42,17 @@ public class ClientWindow extends JFrame {
                     text = logServer.getText();
                     String[] lines = text.split("\n");
                     text = lines[lines.length - 1];
+                    text2 = logClient.getText();
+                    String[] lines2 = text2.split("\n");
+                    text2 = lines2[lines2.length - 1];
 
                     if(text.equals(text2)){
-                        logClient.append(text2 + "\n");
-                        text2 = "";
-                        //System.out.println("я сделалъ");
-                        //return;
-                    }else {
 
+
+                    }else {
+                        logClient.append(text + "\n");
+                        //text2 = "";
+                        System.out.println(tfLogin.getText() + ": Я добавил");
 
                     }
                 } catch (Exception ex) {
@@ -71,44 +75,39 @@ public class ClientWindow extends JFrame {
                         isClientLogin = true;
                         logClient.append("Вы успешно подключились к серверу\n");
                         logServer.append("Пользователь " + tfLogin.getText() + " подключился к беседе\n");
+                        loadChatHistory();
                         timer.start();
                     }
                 }else{
-                    logClient.append("Сервер не запущен\n");
+                    logClient.append("Сервер неактивен\n");
                 }
             }
         });
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setSize(WIDTH, HEIGHT);
-        setTitle("Chat Client");
+        setTitle(tfLogin.getText());
 
         btnSend.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (isClientLogin) {
+                if (isClientLogin && isServerWorking) {
                     timer.stop();
                     logServer.append(tfLogin.getText() + ": " + tfMassage.getText() + "\n");
 
-                    text2 = tfLogin.getText() + ": " + tfMassage.getText();
-                    logClient.append(text2 + "\n");
+                    //text2 = tfLogin.getText() + ": " + tfMassage.getText();
+                    logClient.append(tfLogin.getText() + ": " + tfMassage.getText() + "\n");
+                    saveMessageToFile(logClient.getText());
                     timer.start();
-                    System.out.println(logClient.getText());
-//                    text = logServer.getText();
-//                    String[] lines = text.split("\n");
-//                    text = lines[lines.length - 1];
-//                    logClient.append(text + "\n");
-
+                    //System.out.println(logClient.getText() + tfLogin.getText());
                 }else{
                     logClient.append("Вы не подключены к серверу\n");
-
                 }
-
                 tfMassage.setText("");
             }
-
         });
+
 
         panelTop.add(tfIPAddress);
         panelTop.add(tfPort);
@@ -116,7 +115,7 @@ public class ClientWindow extends JFrame {
         panelTop.add(tfPassword);
         panelTop.add(btnLogin);
         add(panelTop, BorderLayout.NORTH);
-        
+
         panelBottom.add(tfMassage, BorderLayout.CENTER);
         panelBottom.add(btnSend, BorderLayout.EAST);
         add(panelBottom, BorderLayout.SOUTH);
@@ -129,5 +128,26 @@ public class ClientWindow extends JFrame {
         setVisible(true);
 
     }
-}
 
+    private void saveMessageToFile(String message) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(LOG_FILE, false))) {
+            writer.write(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadChatHistory() {
+        File file = new File(LOG_FILE);
+        if (file.exists()) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    logClient.append(line + "\n");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
