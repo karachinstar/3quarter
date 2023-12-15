@@ -44,20 +44,20 @@ public class ServerWindow extends JFrame {
             }
         });
 
-//        openUserChat.addActionListener(e -> {
-//            new ClientWindow();
-//        });
+        openUserChat.addActionListener(e -> {
+            new ClientWindow();
+        });
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setBounds(POS_X, POS_Y, WIDTH, HEIGHT);
         setResizable(false);
         setTitle("Chat server");
         setAlwaysOnTop(true);
-        JPanel panButton = new JPanel(new GridLayout(1, 2));
+        JPanel panButton = new JPanel(new GridLayout(1, 3));
         //setLayout(new GridLayout(1, 2));
         panButton.add(btnStart);
         panButton.add(btnStop);
-        //panButton.add(openUserChat);
+        panButton.add(openUserChat);
         add(panButton, BorderLayout.SOUTH);
         add(logServer);
 

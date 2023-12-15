@@ -34,7 +34,7 @@ public class ClientWindow extends JFrame {
 
 
     public ClientWindow() {
-        Timer timer = new Timer(2000, new ActionListener() { //creating timer with delay of 1 second
+        Timer timer = new Timer(100, new ActionListener() { //creating timer with delay of 1 second
             @Override
             public void actionPerformed(ActionEvent ae) {
                 try {
@@ -45,12 +45,11 @@ public class ClientWindow extends JFrame {
                     if(text.equals(text2)){
                         logClient.append(text2 + "\n");
                         text2 = "";
-                        System.out.println("я сделалъ");
+                        //System.out.println("я сделалъ");
                         //return;
                     }else {
 
-                        updateLogClient = true;
-                        System.out.println(text + " " +  text2);
+
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -92,10 +91,10 @@ public class ClientWindow extends JFrame {
                     timer.stop();
                     logServer.append(tfLogin.getText() + ": " + tfMassage.getText() + "\n");
 
-                    //text2 = tfLogin.getText() + ": " + tfMassage.getText();
+                    text2 = tfLogin.getText() + ": " + tfMassage.getText();
                     logClient.append(text2 + "\n");
                     timer.start();
-
+                    System.out.println(logClient.getText());
 //                    text = logServer.getText();
 //                    String[] lines = text.split("\n");
 //                    text = lines[lines.length - 1];
@@ -103,6 +102,7 @@ public class ClientWindow extends JFrame {
 
                 }else{
                     logClient.append("Вы не подключены к серверу\n");
+
                 }
 
                 tfMassage.setText("");
