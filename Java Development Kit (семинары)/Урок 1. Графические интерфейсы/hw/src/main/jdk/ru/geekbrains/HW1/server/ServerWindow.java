@@ -25,7 +25,7 @@ public class ServerWindow extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (isServerWorking) {
                     isServerWorking = false;
-                    logServer.append("Сервер остановлен \n");//System.out.println("Server stopped " + isServerWorking + "\n");
+                    logServer.append("Сервер остановлен \n");
                 }else{
                     logServer.append("Сервер уже остановлен \n");
                 }
@@ -37,7 +37,7 @@ public class ServerWindow extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (!isServerWorking) {
                     isServerWorking = true;
-                    logServer.append("Запуск сервера \n");//System.out.println("Server started " + isServerWorking + "\n");
+                    logServer.append("Запуск сервера \n");
                 }else{
                     logServer.append("Сервер уже работает \n");
                 }
@@ -46,7 +46,7 @@ public class ServerWindow extends JFrame {
 
         openUserChat.addActionListener(e -> {
             if(isServerWorking)
-            new ClientWindowChat();
+                new ClientWindowChat();
             else logServer.append("Сервер неактивен\n");
         });
 

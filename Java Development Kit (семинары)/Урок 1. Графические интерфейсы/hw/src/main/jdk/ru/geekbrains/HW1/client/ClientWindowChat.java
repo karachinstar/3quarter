@@ -31,7 +31,7 @@ public class ClientWindowChat extends JFrame {
 
     public static String text;
     public static String text2;
-    private static final String LOG_FILE = "/3quarter/Java Development Kit (семинары)/Урок 1. Графические интерфейсы/hw/src/main/jdk/ru/geekbrains/HW1/chat_log.txt";
+    private static final String LOG_FILE = "D:/GB/3quarter/Java Development Kit (семинары)/Урок 1. Графические интерфейсы/hw/src/main/jdk/ru/geekbrains/HW1/chat_log.txt";
 
 
     public ClientWindowChat() {
@@ -45,15 +45,9 @@ public class ClientWindowChat extends JFrame {
                     text2 = logClient.getText();
                     String[] lines2 = text2.split("\n");
                     text2 = lines2[lines2.length - 1];
-
                     if(text.equals(text2)){
-
-
                     }else {
                         logClient.append(text + "\n");
-                        //text2 = "";
-                        System.out.println(tfLogin.getText() + ": Я добавил");
-
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -119,9 +113,7 @@ public class ClientWindowChat extends JFrame {
         panelBottom.add(tfMassage, BorderLayout.CENTER);
         panelBottom.add(btnSend, BorderLayout.EAST);
         add(panelBottom, BorderLayout.SOUTH);
-        //timer.start();
         logClient.setEnabled(true);
-        //logClient.
         JScrollPane scrollPane = new JScrollPane(logClient);
         add(scrollPane);
 
