@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
 public class ClientWindowChat extends JFrame {
     private static final int WIDTH = 400;
@@ -132,5 +133,13 @@ public class ClientWindowChat extends JFrame {
         panelBottom.add(tfMassage);
         panelBottom.add(btnSend, BorderLayout.EAST);
         return panelBottom;
+    }
+
+    @Override
+    protected void processWindowEvent(WindowEvent e){
+        super.processWindowEvent(e);
+        if(e.getID() == WindowEvent.WINDOW_CLOSED){
+            disconnectFromServer();
+        }
     }
 }
