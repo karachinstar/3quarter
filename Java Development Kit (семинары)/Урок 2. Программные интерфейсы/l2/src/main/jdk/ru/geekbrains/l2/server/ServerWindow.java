@@ -113,12 +113,12 @@ public class ServerWindow extends JFrame implements ServerInterface{
                 }
             }
         });
-        openUserChat.addActionListener(e -> {
-            if(Server.getStatusServer())
-                new ClientGUI(this.getConnection());
-                //clientGUIList.add(new ClientGUI(this.getConnection()));
-            else appendLog("Сервер остановлен\n");
-        });
+//        openUserChat.addActionListener(e -> {
+//            if(Server.getStatusServer())
+//                new ClientGUI(this.getConnection());
+//                //clientGUIList.add(new ClientGUI(this.getConnection()));
+//            else appendLog("Сервер остановлен\n");
+//        });
         panButton.add(btnStart);
         panButton.add(btnStop);
         panButton.add(openUserChat);

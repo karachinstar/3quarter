@@ -1,6 +1,7 @@
 package jdk.ru.geekbrains.l2.client;
 
 import jdk.ru.geekbrains.l2.server.Server;
+import jdk.ru.geekbrains.l2.server.ServerRepository;
 import jdk.ru.geekbrains.l2.server.ServerWindow;
 
 import javax.swing.*;
@@ -27,12 +28,11 @@ public class ClientGUI extends JFrame implements View{
     JButton btnSend;
 
 
-
-
-    public ClientGUI(Server serverWindow) {
-       setting(serverWindow);
-       createPanel();
-       setVisible(true);
+    public ClientGUI(Server serverWindow, ServerRepository repository) {
+        client = new Client(this, serverWindow, repository);
+        setting(serverWindow);
+        createPanel();
+        setVisible(true);
     }
 
     private void setting(Server server){
@@ -41,7 +41,7 @@ public class ClientGUI extends JFrame implements View{
         setTitle("Chat client");
        // setLocation(server.getX() - 500, server.getY());
         setDefaultCloseOperation(HIDE_ON_CLOSE);
-        client = new Client(this, server);
+        //client = new Client(this, server);
     }
 
     private void hideHeaderPanel(boolean visible){
@@ -50,6 +50,7 @@ public class ClientGUI extends JFrame implements View{
 
     public void message(){
         client.sendMessage(tfMassage.getText());
+        System.out.println(tfMassage.getText());
         tfMassage.setText("");
     }
 
