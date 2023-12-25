@@ -133,6 +133,6 @@ public class ServerWindow extends JFrame implements ServerInterface{
     }
 
     public Server getConnection() {
-        return ;
+        return null;
     }
 }
