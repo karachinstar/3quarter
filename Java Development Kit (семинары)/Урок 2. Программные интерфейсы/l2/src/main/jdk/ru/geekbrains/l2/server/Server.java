@@ -12,7 +12,7 @@ public class Server implements ServerInterface {
     private ServerRepositoryInterface repository;
 
     public Server(ServerRepositoryInterface repository){
-        new ServerWindow(this);
+        new ServerWindow(this, this);
         this.repository = repository;
         clientGUIList = new ArrayList<>();
 
@@ -41,4 +41,25 @@ public class Server implements ServerInterface {
     }
 
 
+    public void sendMessage(String text) {
+        if(!isServerWorking){
+            return;
+        }
+        text += "";
+        appendLog(text);
+        answerAll(text);
+    }
+
+    private void answerAll(String text) {
+        allDialogs.add(text);
+        repository.writeToFile(allDialogs);
+
+        for (Client client : clientGUIList) {
+            client.receiveMessageFromServer(text); // Отправляем сообщение каждому клиенту
+        }
+    }
+
+    private void appendLog(String text) {
+        ServerWindow.logServer.append(text + "\n");
+    }
 }

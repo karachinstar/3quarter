@@ -2,7 +2,6 @@ package jdk.ru.geekbrains.l2.client;
 
 import jdk.ru.geekbrains.l2.server.Server;
 import jdk.ru.geekbrains.l2.server.ServerRepository;
-import jdk.ru.geekbrains.l2.server.ServerWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,9 +38,7 @@ public class ClientGUI extends JFrame implements View{
         setSize(WIDTH, HEIGHT);
         setResizable(false);
         setTitle("Chat client");
-       // setLocation(server.getX() - 500, server.getY());
         setDefaultCloseOperation(HIDE_ON_CLOSE);
-        //client = new Client(this, server);
     }
 
     private void hideHeaderPanel(boolean visible){
@@ -130,4 +127,5 @@ public class ClientGUI extends JFrame implements View{
         hideHeaderPanel(true);
         client.disconnectFromServer();
     }
+
 }

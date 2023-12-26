@@ -1,4 +1,5 @@
 package jdk.ru.geekbrains.l2.server;
+import jdk.ru.geekbrains.l2.client.Client;
 import jdk.ru.geekbrains.l2.client.ClientGUI;
 import ru.geekbrains.HW1.client.ClientWindowChat;
 
@@ -16,20 +17,18 @@ public class ServerWindow extends JFrame implements ServerInterface{
     private static final int WIDTH = 400;
     private static final int HEIGHT = 300;
     public static String LOG_FILE = "chat_log.txt";
-
-
-    List<ClientGUI> clientGUIList;
     JButton btnStart;
     JButton btnStop;
     JButton openUserChat;
 
-    JTextArea logServer;
+    static JTextArea logServer;
     boolean isServerWorking;
     private ServerInterface listener;
+    private Server server;
 
-    public ServerWindow(ServerInterface listener){
+    public ServerWindow(ServerInterface listener, Server server){
         this.listener = listener;
-        clientGUIList = new ArrayList<>();
+        this.server = server;
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setBounds(POS_X, POS_Y, WIDTH, HEIGHT);
         setResizable(false);
@@ -39,35 +38,12 @@ public class ServerWindow extends JFrame implements ServerInterface{
         setVisible(true);
     }
 
-
-//    public String getLog(){
-//        //return loadChatHistory();
+//    public void disconnectUser(ClientGUI clientGUI){
+//        clientGUIList.remove(clientGUI);
+//        if (clientGUI != null){
+//            clientGUI.disconnectedFromServer();
+//        }
 //    }
-
-    public void disconnectUser(ClientGUI clientGUI){
-        clientGUIList.remove(clientGUI);
-        if (clientGUI != null){
-            clientGUI.disconnectedFromServer();
-        }
-    }
-
-
-
-    public void message(String text){
-        if(!isServerWorking){
-            return;
-        }
-        text += "";
-        appendLog(text);
-        answerAll(text);
-        //saveMessageToFile(text);
-    }
-
-    private void answerAll(String text){
-        for (ClientGUI clientGUI: clientGUIList){
-            clientGUI.sendMessage(text);
-        }
-    }
 
     private void appendLog(String text){
         logServer.append(text + "\n");
@@ -78,7 +54,6 @@ public class ServerWindow extends JFrame implements ServerInterface{
         logServer.setEditable(true);
         add(new JScrollPane(logServer));
         add(createButtons(), BorderLayout.SOUTH);
-        //logServer.append(getLog());
     }
 
     private Component createButtons(){
@@ -91,11 +66,8 @@ public class ServerWindow extends JFrame implements ServerInterface{
             public void actionPerformed(ActionEvent e) {
                 if (Server.getStatusServer()) {
                     listener.statusServer(false);
-                    //isServerWorking = false;
-                    while (!clientGUIList.isEmpty()){
-                        disconnectUser(clientGUIList.get(clientGUIList.size() - 1));
-                    }
                     appendLog("Сервер остановлен \n");
+
                 }else{
                     appendLog("Сервер уже остановлен \n");
                 }
@@ -132,7 +104,7 @@ public class ServerWindow extends JFrame implements ServerInterface{
         isServerWorking = status;
     }
 
-    public Server getConnection() {
-        return null;
-    }
+//    public Server getConnection() {
+//        return null;
+//    }
 }

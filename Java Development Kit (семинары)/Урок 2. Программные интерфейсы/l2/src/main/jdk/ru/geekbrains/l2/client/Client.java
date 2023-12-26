@@ -10,6 +10,7 @@ public class Client {
     private ServerRepository repository;
     boolean connected;
 
+
     public Client(View view, Server server, ServerRepository repository) {
         this.view = view;
         this.server = server;
@@ -40,22 +41,21 @@ public class Client {
         }
     }
 
-    public void answerFromServer(String messageFromServer){
-        showOnWindow(messageFromServer);
-    }
-
     public void sendMessage(String message){
-        if (connected){
+        if (Server.getStatusServer()){
             if(!message.isEmpty()){
-                //server.sendMessage(name + ": " + message);
+                server.sendMessage(name + ": " + message);
             }
 
         }else{
             showOnWindow("Нет подключения к серверу");
         }
     }
-
     private void showOnWindow(String text){
         view.sendMessage(text + "\n");
+    }
+
+    public void receiveMessageFromServer(String allDialogs) {
+        showOnWindow(allDialogs);
     }
 }

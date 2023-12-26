@@ -10,10 +10,10 @@ import jdk.ru.geekbrains.l2.server.ServerWindow;
 public class Main {
     public static void main(String[] args) {
         ServerRepositoryInterface repository =
-                new ServerRepository("src/main/java/JDK/HomeWork/HW_02/server/dialogsBase.txt");
+                new ServerRepository("dialogsBase.txt");
         Server server = new Server(repository);
         ServerRepository serverRepository
-                = new ServerRepository("src/main/java/JDK/HomeWork/HW_02/server/dialogsBase.txt");
+                = new ServerRepository("dialogsBase.txt");
         new ClientGUI(server, serverRepository);
         new ClientGUI(server, serverRepository);
 
