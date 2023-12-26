@@ -8,6 +8,7 @@ public class ServerRepository implements ServerRepositoryInterface{
     public ServerRepository(String path){
         this.path = path;
     }
+
     @Override
     public String readFromFile() {
         File file = new File(path);

@@ -10,7 +10,7 @@ public class Client {
     private ServerRepository repository;
     boolean connected;
 
-    public Client(View view, Server server) {
+    public Client(View view, Server server, ServerRepository repository) {
         this.view = view;
         this.server = server;
         this.repository = repository;
