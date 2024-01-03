@@ -5,4 +5,9 @@ false в противном случае. Массивы могут быть л�
 одного типа по парно.
  */
 public class Arrays {
+    public static <T> boolean compareArrays(T[] arr, T[] arr2) {
+        boolean  isLengthsEquals = arr.length == arr2.length;
+        boolean isClaasEquals = arr.getClass().getName().equals(arr2.getClass().getName());
+        return isLengthsEquals && isClaasEquals;
+    }
 }
