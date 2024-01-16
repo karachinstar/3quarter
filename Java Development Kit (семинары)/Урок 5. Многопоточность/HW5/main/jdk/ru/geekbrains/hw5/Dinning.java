@@ -1,10 +1,15 @@
 package jdk.ru.geekbrains.hw5;
 
 public class Dinning {
-    private static final int NUM_PHILOSOPHERS = 5; // Количество философов
+    private static final long start = System.nanoTime();
+
+    public static long getStart() {
+        return start;
+    }
+
+    private static final int NUM_PHILOSOPHERS = 5;
     private final Philosopher[] philosophers;
     private final Fork[] forks;
-   // private final ReentrantLock table = new ReentrantLock();
 
     public Dinning() {
         philosophers = new Philosopher[NUM_PHILOSOPHERS];
