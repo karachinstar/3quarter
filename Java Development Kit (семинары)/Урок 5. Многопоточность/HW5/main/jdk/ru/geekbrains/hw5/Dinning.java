@@ -1,11 +1,7 @@
 package jdk.ru.geekbrains.hw5;
 
 public class Dinning {
-    private static final long start = System.nanoTime();
 
-    public static long getStart() {
-        return start;
-    }
 
     private static final int NUM_PHILOSOPHERS = 5;
     private final Philosopher[] philosophers;
@@ -20,7 +16,13 @@ public class Dinning {
         }
 
         for (int i = 0; i < NUM_PHILOSOPHERS; i++) {
-            philosophers[i] = new Philosopher(i, forks[i], forks[(i + 1) % NUM_PHILOSOPHERS]);
+            if(i % 2 == 0) {
+                philosophers[i] = new Philosopher(i, forks[i], forks[(i + 1) % NUM_PHILOSOPHERS]);
+
+            }else{
+                philosophers[i] = new Philosopher(i, forks[(i + 1) % NUM_PHILOSOPHERS], forks[i]);
+
+            }
             new Thread(philosophers[i]).start();
         }
     }

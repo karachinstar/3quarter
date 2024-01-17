@@ -4,8 +4,7 @@ import java.util.concurrent.Semaphore;
 
 public class Fork {
     private final int id;
-    private final Semaphore semaphore = new Semaphore(1);
-
+    public Semaphore semaphore = new Semaphore(1);
     public Fork(int id) {
         this.id = id;
     }
@@ -18,7 +17,7 @@ public class Fork {
         try {
             semaphore.acquire();
         } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
+            e.printStackTrace();
         }
     }
 
